@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { EditTasksListDialog } from "./EditTasksListDialog";
+import EditTasksListDialog from "./EditTasksListDialog";
 
 export default function TasksListCard() {
   return (
