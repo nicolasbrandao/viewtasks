@@ -1,16 +1,10 @@
 import React from "react";
-import Persona from "@/public/persona_icon.svg";
-import Image from "next/image";
+import { ListChecks } from "lucide-react";
 
 export default function LoginPage() {
   return (
-    <div>
-      <Image
-        alt="Person reading a book"
-        height={300}
-        src={Persona}
-        width={300}
-      />
+    <div className="flex min-h-screen flex-col items-center justify-center border">
+      <ListChecks className="h-[180px] w-[180px]" />
     </div>
   );
 }
