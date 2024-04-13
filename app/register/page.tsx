@@ -1,9 +1,9 @@
 import React from "react";
 import { ListChecks } from "lucide-react";
-import LoginForm from "@/components/LoginForm";
+import RegisterForm from "@/components/RegisterForm";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <ListChecks className="h-[180px] w-[180px]" />
@@ -11,12 +11,12 @@ export default function LoginPage() {
         <h1 className="text-[3rem]">Just To-Do It</h1>
         <h2 className="text-[2rem]">Your #1 platform to just do it!</h2>
       </div>
-      <LoginForm />
+      <RegisterForm />
       <Link
         className="mx-auto w-full max-w-[400px] place-self-start px-4 text-muted-foreground underline"
-        href={"/register"}
+        href={"/login"}
       >
-        New to-doing? Register here
+        Already registered? Login here
       </Link>
     </div>
   );
