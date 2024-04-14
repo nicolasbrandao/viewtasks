@@ -22,7 +22,7 @@ import {
   Sun,
   SunMoon,
   User,
-  Home
+  Home,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
