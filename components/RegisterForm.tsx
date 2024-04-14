@@ -15,19 +15,33 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { apiUrl } from "@/lib/utils";
 
 export default function RegisterForm() {
+
   const form = useForm<z.infer<typeof registerForm>>({
-    resolver: zodResolver(registerForm),
+    resolver: zodResolver(registerForm.strict()),
     defaultValues: {
       email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerForm>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof registerForm>) => {
+    try {
+      const res = await fetch(`${apiUrl}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+    } catch (e) {
+      // TODO: properly handle errors
+      console.log(e);
+    }
+  };
+
   return (
     <Form {...form}>
       <form
