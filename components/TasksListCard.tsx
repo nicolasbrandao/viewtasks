@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/card";
 import EditTasksListDialog from "./EditTasksListDialog";
 import { TasksList } from "@/types/entities";
+import Link from "next/link";
 
 type Props = {
   tasksList: TasksList;
@@ -24,7 +25,10 @@ export default function TasksListCard({ tasksList }: Props) {
       </CardHeader>
       <CardFooter className="flex justify-between">
         <EditTasksListDialog tasksList={tasksList} />
-        <Button>View</Button>
+        {/* TODO: replace path with actual user if*/}
+        <Link href={`meusuario/${tasksList.id}`}>
+          <Button>View</Button>
+        </Link>
       </CardFooter>
     </Card>
   );
