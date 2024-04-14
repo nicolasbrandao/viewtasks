@@ -9,16 +9,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import EditTasksListDialog from "./EditTasksListDialog";
+import { TasksList } from "@/types/entities";
 
-export default function TasksListCard() {
+type Props = {
+  tasksList: TasksList;
+};
+
+export default function TasksListCard({ tasksList }: Props) {
   return (
-    <Card className="w-[350px]">
+    <Card className="w-full">
       <CardHeader>
-        <CardTitle>To-Do List Title</CardTitle>
+        <CardTitle>{tasksList.title}</CardTitle>
         <CardDescription>Created at XX-XX-XX</CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-between">
-        <EditTasksListDialog />
+        <EditTasksListDialog tasksList={tasksList} />
         <Button>View</Button>
       </CardFooter>
     </Card>
