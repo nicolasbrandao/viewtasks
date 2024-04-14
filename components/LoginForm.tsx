@@ -15,6 +15,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { apiUrl } from "@/lib/utils";
+import { setCookie } from "cookies-next";
 
 export default function LoginForm() {
   const form = useForm<z.infer<typeof loginForm>>({
@@ -25,9 +27,24 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginForm>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof loginForm>) => {
+    try {
+      const res = await fetch(`${apiUrl}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+
+      const data = await res.json();
+      const { access_token } = data;
+      setCookie("access_token", access_token);
+    } catch (e) {
+      // TODO: properly handle errors
+      console.log(e);
+    }
+  };
   return (
     <Form {...form}>
       <form
@@ -54,7 +71,11 @@ export default function LoginForm() {
             <FormItem>
               <FormLabel>Password*</FormLabel>
               <FormControl>
-                <Input placeholder="******" {...field} />
+                <Input
+                  placeholder="******"
+                  {...field}
+                  type="password"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
