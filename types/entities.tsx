@@ -3,3 +3,10 @@ export type TasksList = {
   userId: string;
   title: string;
 };
+
+export type Task = {
+  id: string;
+  tasksListId: string;
+  title: string;
+  completed: boolean;
+};
