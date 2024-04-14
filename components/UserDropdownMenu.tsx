@@ -16,15 +16,17 @@ import {
 import React from "react";
 import {
   Computer,
-  CreditCard,
+  NotebookTabs,
   LogOut,
   Moon,
   Sun,
   SunMoon,
   User,
+  Home
 } from "lucide-react";
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function UserDropdownMenu() {
   const { setTheme } = useTheme();
@@ -41,12 +43,17 @@ export default function UserDropdownMenu() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
-            <span>New List</span>
+            <Link className="flex w-full items-center" href="/">
+              <Home className="mr-2 h-4 w-4" />
+              <span>Home</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard className="mr-2 h-4 w-4" />
-            <span>My Lists</span>
+            {/* TODO: replace this with actual user Id  */}
+            <Link className="flex w-full items-center" href="/userId">
+              <NotebookTabs className="mr-2 h-4 w-4" />
+              <span>My Lists</span>
+            </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
