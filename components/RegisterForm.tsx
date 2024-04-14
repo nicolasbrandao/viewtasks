@@ -18,7 +18,6 @@ import { Input } from "@/components/ui/input";
 import { apiUrl } from "@/lib/utils";
 
 export default function RegisterForm() {
-
   const form = useForm<z.infer<typeof registerForm>>({
     resolver: zodResolver(registerForm.strict()),
     defaultValues: {
