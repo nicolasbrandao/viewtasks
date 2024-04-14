@@ -28,7 +28,7 @@ export default async function TasksListPage({
   const tasks: Task[] = await tasksData.json();
 
   return (
-    <div className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
+    <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
       <h1 className="place-self-start text-[3rem] font-bold">
         {tasksList.title}
       </h1>
@@ -47,6 +47,6 @@ export default async function TasksListPage({
         .map((task) => (
           <TaskCard key={task.id} task={task} />
         ))}
-    </div>
+    </main>
   );
 }
