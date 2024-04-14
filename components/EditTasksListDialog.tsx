@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,8 +12,20 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { apiUrl } from "@/lib/utils";
+import { TasksList } from "@/types/entities";
 
-export default function EditTasksListDialog() {
+type Props = {
+  tasksList: TasksList;
+};
+
+export default function EditTasksListDialog({ tasksList }: Props) {
+  const handleOnDelete = async () => {
+    await fetch(`${apiUrl}/tasks-lists/${tasksList.id}`, {
+      method: "DELETE",
+    });
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -38,7 +52,11 @@ export default function EditTasksListDialog() {
           </div>
         </div>
         <DialogFooter className="flex-row justify-between gap-2">
-          <Button type="button" variant={"destructive"}>
+          <Button
+            onClick={handleOnDelete}
+            type="button"
+            variant={"destructive"}
+          >
             Delete List
           </Button>
           <Button type="submit">Save Changes</Button>
