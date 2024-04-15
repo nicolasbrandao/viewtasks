@@ -19,7 +19,10 @@ export default function TaskCard({ task }: Props) {
     task.completed ? "border-muted" : "bg-background",
   );
 
-  const titleClass = cn(task.completed && "text-muted-foreground");
+  const titleClass = cn(
+    task.completed && "text-muted-foreground",
+    "truncate max-w-[200px]",
+  );
 
   // TODO: verify why this is not updating state/render
   const handleToggleCompleted = async () => {

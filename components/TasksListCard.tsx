@@ -8,10 +8,9 @@ import Link from "next/link";
 
 type Props = {
   tasksList: TasksList;
-  userId: string;
 };
 
-export default function TasksListCard({ tasksList, userId }: Props) {
+export default function TasksListCard({ tasksList }: Props) {
   return (
     <Card className="w-full">
       <CardHeader>
@@ -19,7 +18,7 @@ export default function TasksListCard({ tasksList, userId }: Props) {
       </CardHeader>
       <CardFooter className="flex justify-between">
         <EditTasksListDialog tasksList={tasksList} />
-        <Link href={`${userId}/${tasksList.id}`}>
+        <Link href={`/my-lists/${tasksList.id}`}>
           <Button>View</Button>
         </Link>
       </CardFooter>

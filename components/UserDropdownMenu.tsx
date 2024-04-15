@@ -57,10 +57,7 @@ export default function UserDropdownMenu() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link
-              className="flex w-full items-center"
-              href={`/${credentials.sub}`}
-            >
+            <Link className="flex w-full items-center" href={"/my-lists"}>
               <NotebookTabs className="mr-2 h-4 w-4" />
               <span>My Lists</span>
             </Link>

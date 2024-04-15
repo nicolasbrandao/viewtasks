@@ -3,15 +3,21 @@
 import NewTasksListDialog from "@/components/NewTasksListDialog";
 import TasksListCard from "@/components/TasksListCard";
 import { useTasksList, useTasksListActions } from "@/context/tasksLists";
+import { decodeUserInfo } from "@/lib/utils";
+import { getCookie, CookieValueTypes } from "cookies-next";
 import React, { useEffect } from "react";
 
-export default function UserPage({ params }: { params: { userId: string } }) {
+export default function UserPage() {
   const { tasksLists } = useTasksList();
   const { fetchTasksLists } = useTasksListActions();
+  const token: CookieValueTypes = getCookie("access_token");
+
+  let credentials = { sub: "", email: "" };
+  if (token) credentials = decodeUserInfo(token);
 
   useEffect(() => {
-    fetchTasksLists(params.userId);
-  }, [fetchTasksLists, params.userId]);
+    fetchTasksLists(credentials.sub);
+  }, [fetchTasksLists, credentials.sub]);
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
@@ -20,11 +26,7 @@ export default function UserPage({ params }: { params: { userId: string } }) {
       <div className="flex w-full flex-col items-center gap-4">
         {tasksLists &&
           tasksLists.map((tasksList) => (
-            <TasksListCard
-              key={tasksList.id}
-              tasksList={tasksList}
-              userId={params.userId}
-            />
+            <TasksListCard key={tasksList.id} tasksList={tasksList} />
           ))}
       </div>
     </main>

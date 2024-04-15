@@ -4,26 +4,33 @@ import NewToDoDialog from "@/components/NewTaskDialog";
 import TaskCard from "@/components/TaskCard";
 import { useTasks, useTasksActions } from "@/context/tasks";
 import { useTasksList, useTasksListActions } from "@/context/tasksLists";
+import { decodeUserInfo } from "@/lib/utils";
+import { getCookie, CookieValueTypes } from "cookies-next";
 import React, { useEffect } from "react";
 
 export default function TasksListPage({
   params,
 }: {
-  params: { userId: string; tasksListId: string };
+  params: { tasksListId: string };
 }) {
   const { tasksLists } = useTasksList();
   const { tasks } = useTasks();
   const { fetchTasks } = useTasksActions();
   const { fetchTasksLists } = useTasksListActions();
 
+  const token: CookieValueTypes = getCookie("access_token");
+
+  let credentials = { sub: "", email: "" };
+  if (token) credentials = decodeUserInfo(token);
+
   useEffect(() => {
     fetchTasks(params.tasksListId);
-    fetchTasksLists(params.userId);
+    fetchTasksLists(credentials.sub);
   }, [
     fetchTasks,
     fetchTasksLists,
     params.tasksListId,
-    params.userId
+    credentials.sub
   ]);
 
   const tasksList = tasksLists.find(

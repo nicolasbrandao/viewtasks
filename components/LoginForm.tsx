@@ -41,9 +41,8 @@ export default function LoginForm() {
       const data = await res.json();
       const { access_token } = data;
 
-      // redirect at login
-      const user = signIn(access_token);
-      router.push(`/${user.sub}`);
+      signIn(access_token);
+      router.push("/my-lists");
     } catch (e) {
       // TODO: properly handle errors
       console.log(e);
