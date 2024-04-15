@@ -8,7 +8,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // check auth
   if (!cookies().get("access_token"))
     return redirect("/login?error=unauthorized");
 
