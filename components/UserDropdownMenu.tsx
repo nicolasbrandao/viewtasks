@@ -29,8 +29,10 @@ import { Button } from "./ui/button";
 import Link from "next/link";
 import { decodeUserInfo, signOut } from "@/lib/utils";
 import { CookieValueTypes, getCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
 
 export default function UserDropdownMenu() {
+  const router = useRouter();
   const { setTheme } = useTheme();
   const token: CookieValueTypes = getCookie("access_token");
 
@@ -91,6 +93,7 @@ export default function UserDropdownMenu() {
         <DropdownMenuItem
           onClick={() => {
             signOut();
+            router.push("/");
           }}
         >
           <LogOut className="mr-2 h-4 w-4" />
