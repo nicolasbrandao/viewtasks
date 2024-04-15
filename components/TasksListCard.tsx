@@ -3,7 +3,6 @@ import * as React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -22,7 +21,6 @@ export default function TasksListCard({ tasksList, userId }: Props) {
     <Card className="w-full">
       <CardHeader>
         <CardTitle>{tasksList.title}</CardTitle>
-        <CardDescription>Created at XX-XX-XX</CardDescription>
       </CardHeader>
       <CardFooter className="flex justify-between">
         <EditTasksListDialog tasksList={tasksList} />
