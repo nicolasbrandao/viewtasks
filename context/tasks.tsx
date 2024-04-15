@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { ActionType } from "@/types/context";
 import { Task } from "@/types/entities";
-import { apiUrl } from "@/lib/utils";
+import { API_URL } from "@/lib/utils";
 
 export const actionTypes = {
   deleteTaskStart: "DELETE_TASK_START",
@@ -152,7 +152,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
         try {
           dispatch({ type: actionTypes.deleteTaskStart });
 
-          await fetch(`${apiUrl}/tasks/${id}`, { method: "DELETE" });
+          await fetch(`${API_URL}/tasks/${id}`, { method: "DELETE" });
 
           dispatch({ type: actionTypes.deleteTaskSuccess, payload: id });
         } catch (error) {
@@ -169,7 +169,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
         dispatch({ type: actionTypes.fetchTasksStart });
         try {
           const tasksResponse = await fetch(
-            `${apiUrl}/tasks?tasksListId=${tasksListId}`,
+            `${API_URL}/tasks?tasksListId=${tasksListId}`,
             {
               method: "GET",
             },
@@ -193,7 +193,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
       async createTask(title: string) {
         dispatch({ type: actionTypes.createTaskStart });
         try {
-          const taskResponse = await fetch(`${apiUrl}/tasks`, {
+          const taskResponse = await fetch(`${API_URL}/tasks`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -224,7 +224,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
       async editTask(id: string, title?: string, completed?: boolean) {
         dispatch({ type: actionTypes.editTaskStart });
         try {
-          const taskResponse = await fetch(`${apiUrl}/tasks/${id}`, {
+          const taskResponse = await fetch(`${API_URL}/tasks/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",

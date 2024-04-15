@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { apiUrl } from "@/lib/utils";
+import { API_URL } from "@/lib/utils";
 
 export default function RegisterForm() {
   const form = useForm<z.infer<typeof registerForm>>({
@@ -28,7 +28,7 @@ export default function RegisterForm() {
 
   const onSubmit = async (values: z.infer<typeof registerForm>) => {
     try {
-      await fetch(`${apiUrl}/users`, {
+      await fetch(`${API_URL}/users`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

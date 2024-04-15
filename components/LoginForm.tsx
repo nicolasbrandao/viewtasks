@@ -15,7 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { apiUrl } from "@/lib/utils";
+import { API_URL } from "@/lib/utils";
 import { setCookie } from "cookies-next";
 
 export default function LoginForm() {
@@ -29,7 +29,7 @@ export default function LoginForm() {
 
   const onSubmit = async (values: z.infer<typeof loginForm>) => {
     try {
-      const res = await fetch(`${apiUrl}/auth/login`, {
+      const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

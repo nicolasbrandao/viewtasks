@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { ActionType } from "@/types/context";
 import { TasksList } from "@/types/entities";
-import { apiUrl } from "@/lib/utils";
+import { API_URL } from "@/lib/utils";
 
 export const actionTypes = {
   deleteTasksListStart: "DELETE_TASKS_LIST_START",
@@ -152,7 +152,7 @@ export function TasksListProvider({ children }: PropsWithChildren) {
         try {
           dispatch({ type: actionTypes.deleteTasksListStart });
 
-          await fetch(`${apiUrl}/tasks-lists/${id}`, { method: "DELETE" });
+          await fetch(`${API_URL}/tasks-lists/${id}`, { method: "DELETE" });
 
           dispatch({ type: actionTypes.deleteTasksListSuccess, payload: id });
         } catch (error) {
@@ -169,7 +169,7 @@ export function TasksListProvider({ children }: PropsWithChildren) {
         dispatch({ type: actionTypes.fetchTasksListStart });
         try {
           const tasksListsResponse = await fetch(
-            `${apiUrl}/tasks-lists?userId=${userId}`,
+            `${API_URL}/tasks-lists?userId=${userId}`,
             {
               method: "GET",
             },
@@ -193,7 +193,7 @@ export function TasksListProvider({ children }: PropsWithChildren) {
       async createTasksList(title: string) {
         dispatch({ type: actionTypes.createTasksListStart });
         try {
-          const res = await fetch(`${apiUrl}/tasks-lists`, {
+          const res = await fetch(`${API_URL}/tasks-lists`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -224,7 +224,7 @@ export function TasksListProvider({ children }: PropsWithChildren) {
       async editTasksList(id: string, title: string) {
         dispatch({ type: actionTypes.editTasksListStart });
         try {
-          const res = await fetch(`${apiUrl}/tasks-lists/${id}`, {
+          const res = await fetch(`${API_URL}/tasks-lists/${id}`, {
             method: "PATCH",
             headers: {
               "Content-Type": "application/json",
