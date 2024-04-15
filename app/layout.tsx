@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ThemeProvider from "@/components/providers/ThemeProvider";
+import { TasksProvider } from "@/context/tasks";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,10 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem
         >
-          <Navbar />
-          {children}
+          <TasksProvider>
+            <Navbar />
+            {children}
+          </TasksProvider>
         </ThemeProvider>
       </body>
     </html>
