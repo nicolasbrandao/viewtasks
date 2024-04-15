@@ -12,7 +12,6 @@ import { TasksList } from "@/types/entities";
 import { apiUrl } from "@/lib/utils";
 
 export const actionTypes = {
-  updateTasksLists: "UPDATE_TASKS_LISTS",
   deleteTasksListStart: "DELETE_TASKS_LIST_START",
   deleteTasksListSuccess: "DELETE_TASKS_LIST_SUCCESS",
   deleteTasksListFailed: "DELETE_TASKS_LIST_FAILED",
