@@ -3,7 +3,6 @@ import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import { TasksListProvider } from "@/context/tasksLists";
 import { TasksProvider } from "@/context/tasks";
@@ -30,10 +29,7 @@ export default function RootLayout({
           enableSystem
         >
           <TasksListProvider>
-            <TasksProvider>
-              <Navbar />
-              {children}
-            </TasksProvider>
+            <TasksProvider>{children}</TasksProvider>
           </TasksListProvider>
         </ThemeProvider>
       </body>
