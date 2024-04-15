@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,19 +12,37 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { apiUrl } from "@/lib/utils";
 import { TasksList } from "@/types/entities";
+import { useTasks, useTasksActions } from "@/context/tasks";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "./ui/form";
+import tasksListForm from "@/lib/zod/TasksListForm.schema";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 type Props = {
   tasksList: TasksList;
 };
 
 export default function EditTasksListDialog({ tasksList }: Props) {
-  const handleOnDelete = async () => {
-    await fetch(`${apiUrl}/tasks-lists/${tasksList.id}`, {
-      method: "DELETE",
-    });
+  const { editTasksList, deleteTasksList } = useTasksActions();
+  const { status } = useTasks();
+  const form = useForm<z.infer<typeof tasksListForm>>({
+    resolver: zodResolver(tasksListForm),
+    defaultValues: {
+      title: "",
+    },
+  });
+
+  const onSubmit = async (values: z.infer<typeof tasksListForm>) => {
+    editTasksList(tasksList.id, values.title);
   };
 
   return (
@@ -39,21 +58,31 @@ export default function EditTasksListDialog({ tasksList }: Props) {
             done.
           </DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right" htmlFor="title">
-              Title
-            </Label>
-            <Input
-              className="col-span-3"
-              defaultValue="Title"
-              id="title"
+        <Form {...form}>
+          <form
+            className="flex w-full max-w-[400px] flex-col space-y-8 p-4"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
+            <FormField
+              control={form.control}
+              name="title"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="To-Do title" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
             />
-          </div>
-        </div>
+            <Button type="submit">Save To-Dos List</Button>
+          </form>
+        </Form>
         <DialogFooter className="flex-row justify-between gap-2">
           <Button
-            onClick={handleOnDelete}
+            disabled={status === "loading"}
+            onClick={() => deleteTasksList(tasksList.id)}
             type="button"
             variant={"destructive"}
           >

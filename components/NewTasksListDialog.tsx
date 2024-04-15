@@ -19,29 +19,23 @@ import {
   FormMessage,
   Form,
 } from "./ui/form";
-import newTasksListForm from "@/lib/zod/NewTasksListForm.schema";
+import tasksListForm from "@/lib/zod/TasksListForm.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { apiUrl } from "@/lib/utils";
+import { useTasksActions } from "@/context/tasks";
 
 export default function NewTasksListDialog() {
-  const form = useForm<z.infer<typeof newTasksListForm>>({
-    resolver: zodResolver(newTasksListForm),
+  const { createTasksList } = useTasksActions();
+  const form = useForm<z.infer<typeof tasksListForm>>({
+    resolver: zodResolver(tasksListForm),
     defaultValues: {
       title: "",
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof newTasksListForm>) => {
-    await fetch(`${apiUrl}/tasks-lists`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // TODO: replace this with logged userId
-      body: JSON.stringify({ ...values, userId: "cluzkodz20000vg1886jcykru" }),
-    });
+  const onSubmit = async (values: z.infer<typeof tasksListForm>) => {
+    createTasksList(values.title);
   };
 
   return (

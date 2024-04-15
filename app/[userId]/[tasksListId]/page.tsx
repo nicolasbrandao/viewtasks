@@ -2,6 +2,7 @@ import NewToDoDialog from "@/components/NewToDoDialog";
 import TaskCard from "@/components/TaskCard";
 import { apiUrl } from "@/lib/utils";
 import { Task, TasksList } from "@/types/entities";
+import { notFound } from "next/navigation";
 import React from "react";
 
 export default async function TasksListPage({
@@ -9,23 +10,25 @@ export default async function TasksListPage({
 }: {
   params: { tasksListId: string };
 }) {
-  const tasksListData = await fetch(
+  const tasksList: TasksList = await fetch(
     `${apiUrl}/tasks-lists/${params.tasksListId}`,
     {
       method: "GET",
     },
-  );
+  )
+    .then((res) => res.json())
+    .catch(() => notFound());
 
-  const tasksList: TasksList = await tasksListData.json();
+  if (!tasksList) return notFound();
 
-  const tasksData = await fetch(
+  const tasks: Task[] = await fetch(
     `${apiUrl}/tasks?tasksListId=${params.tasksListId}`,
     {
       method: "GET",
     },
-  );
-
-  const tasks: Task[] = await tasksData.json();
+  )
+    .then((res) => res.json())
+    .catch(() => notFound());
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">

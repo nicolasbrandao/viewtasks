@@ -1,28 +1,31 @@
+"use client";
+
 import NewTasksListDialog from "@/components/NewTasksListDialog";
 import TasksListCard from "@/components/TasksListCard";
-import { apiUrl } from "@/lib/utils";
-import { TasksList } from "@/types/entities";
-import React from "react";
+import { useTasks, useTasksActions } from "@/context/tasks";
+import React, { useEffect } from "react";
 
-export default async function UserPage() {
-  // TODO: use var as userId
-  const tasksListsData = await fetch(
-    `${apiUrl}/tasks-lists?userId=cluzkodz20000vg1886jcykru`,
-    {
-      method: "GET",
-    },
-  );
+export default function UserPage({ params }: { params: { userId: string } }) {
+  const { tasksLists } = useTasks();
+  const { fetchTasksLists } = useTasksActions();
 
-  const tasksLists: TasksList[] = await tasksListsData.json();
+  useEffect(() => {
+    fetchTasksLists(params.userId);
+  }, [fetchTasksLists, params.userId]);
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
       <h1 className="text-[2rem] font-bold">My To-Dos Lists</h1>
       <NewTasksListDialog />
       <div className="flex w-full flex-col items-center gap-4">
-        {tasksLists.map((tasksList) => (
-          <TasksListCard key={tasksList.id} tasksList={tasksList} />
-        ))}
+        {tasksLists &&
+          tasksLists.map((tasksList) => (
+            <TasksListCard
+              key={tasksList.id}
+              tasksList={tasksList}
+              userId={params.userId}
+            />
+          ))}
       </div>
     </main>
   );

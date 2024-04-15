@@ -14,9 +14,10 @@ import Link from "next/link";
 
 type Props = {
   tasksList: TasksList;
+  userId: string;
 };
 
-export default function TasksListCard({ tasksList }: Props) {
+export default function TasksListCard({ tasksList, userId }: Props) {
   return (
     <Card className="w-full">
       <CardHeader>
@@ -25,8 +26,7 @@ export default function TasksListCard({ tasksList }: Props) {
       </CardHeader>
       <CardFooter className="flex justify-between">
         <EditTasksListDialog tasksList={tasksList} />
-        {/* TODO: replace path with actual user if*/}
-        <Link href={`meusuario/${tasksList.id}`}>
+        <Link href={`${userId}/${tasksList.id}`}>
           <Button>View</Button>
         </Link>
       </CardFooter>
