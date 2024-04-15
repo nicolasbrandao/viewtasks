@@ -25,7 +25,11 @@ import {
   FormMessage,
 } from "./ui/form";
 
-export default function NewToDoDialog() {
+type Props = {
+  tasksListId: string;
+};
+
+export default function NewToDoDialog({ tasksListId }: Props) {
   const { createTask } = useTasksActions();
   const form = useForm<z.infer<typeof taskForm>>({
     resolver: zodResolver(taskForm),
@@ -35,7 +39,7 @@ export default function NewToDoDialog() {
   });
 
   const onSubmit = async (values: z.infer<typeof taskForm>) => {
-    createTask(values.title);
+    createTask(tasksListId, values.title);
   };
 
   return (

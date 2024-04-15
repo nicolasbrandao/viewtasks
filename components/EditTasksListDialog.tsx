@@ -88,7 +88,6 @@ export default function EditTasksListDialog({ tasksList }: Props) {
           >
             Delete List
           </Button>
-          <Button type="submit">Save Changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

@@ -172,6 +172,9 @@ export function TasksListProvider({ children }: PropsWithChildren) {
             `${API_URL}/tasks-lists?userId=${userId}`,
             {
               method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
             },
           );
           const tasksListsData: TasksList[] = await tasksListsResponse.json();

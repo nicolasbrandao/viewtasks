@@ -15,10 +15,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { API_URL } from "@/lib/utils";
-import { setCookie } from "cookies-next";
+import { API_URL, signIn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof loginForm>>({
     resolver: zodResolver(loginForm),
     defaultValues: {
@@ -39,7 +40,10 @@ export default function LoginForm() {
 
       const data = await res.json();
       const { access_token } = data;
-      setCookie("access_token", access_token);
+
+      // redirect at login
+      const user = signIn(access_token);
+      router.push(`/${user.sub}`);
     } catch (e) {
       // TODO: properly handle errors
       console.log(e);

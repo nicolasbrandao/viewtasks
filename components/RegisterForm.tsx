@@ -67,7 +67,11 @@ export default function RegisterForm() {
             <FormItem>
               <FormLabel>Password*</FormLabel>
               <FormControl>
-                <Input placeholder="******" {...field} />
+                <Input
+                  placeholder="******"
+                  type="password"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

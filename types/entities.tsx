@@ -10,3 +10,8 @@ export type Task = {
   title: string;
   completed: boolean;
 };
+
+export type UserInfo = {
+  sub: string;
+  email: string;
+};

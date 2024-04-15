@@ -30,14 +30,12 @@ export default function TasksListPage({
     (tasksList) => tasksList.id === params.tasksListId,
   );
 
-  console.log(tasksList);
-
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
       <h1 className="place-self-start text-[3rem] font-bold">
         {tasksList?.title}
       </h1>
-      <NewToDoDialog />
+      <NewToDoDialog tasksListId={tasksList?.id as string} />
       <h2 className="place-self-start text-[2rem] font-bold">To-Dos</h2>
       {tasks &&
         tasks
