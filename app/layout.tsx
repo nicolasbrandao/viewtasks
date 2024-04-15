@@ -6,6 +6,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import ThemeProvider from "@/components/providers/ThemeProvider";
 import { TasksListProvider } from "@/context/tasksLists";
+import { TasksProvider } from "@/context/tasks";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,8 +30,10 @@ export default function RootLayout({
           enableSystem
         >
           <TasksListProvider>
-            <Navbar />
-            {children}
+            <TasksProvider>
+              <Navbar />
+              {children}
+            </TasksProvider>
           </TasksListProvider>
         </ThemeProvider>
       </body>
