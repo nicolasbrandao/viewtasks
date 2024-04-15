@@ -1,12 +1,7 @@
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import EditTasksListDialog from "./EditTasksListDialog";
 import { TasksList } from "@/types/entities";
 import Link from "next/link";
