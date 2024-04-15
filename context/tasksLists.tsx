@@ -134,16 +134,16 @@ const reducer = (
   }
 };
 
-export const TasksContext = createContext(initialState);
+export const TasksListContext = createContext(initialState);
 
-export const TasksActionContext = createContext<Actions>({
+export const TasksListActionContext = createContext<Actions>({
   deleteTasksList: () => {},
   fetchTasksLists: () => {},
   createTasksList: () => {},
   editTasksList: () => {},
 });
 
-export function TasksProvider({ children }: PropsWithChildren) {
+export function TasksListProvider({ children }: PropsWithChildren) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const actions: Actions = useMemo(
@@ -252,18 +252,18 @@ export function TasksProvider({ children }: PropsWithChildren) {
   );
 
   return (
-    <TasksContext.Provider value={state}>
-      <TasksActionContext.Provider value={actions}>
+    <TasksListContext.Provider value={state}>
+      <TasksListActionContext.Provider value={actions}>
         {children}
-      </TasksActionContext.Provider>
-    </TasksContext.Provider>
+      </TasksListActionContext.Provider>
+    </TasksListContext.Provider>
   );
 }
 
-export function useTasks() {
-  return useContext(TasksContext);
+export function useTasksList() {
+  return useContext(TasksListContext);
 }
 
-export function useTasksActions() {
-  return useContext(TasksActionContext);
+export function useTasksListActions() {
+  return useContext(TasksListActionContext);
 }

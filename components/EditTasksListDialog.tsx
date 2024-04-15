@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { TasksList } from "@/types/entities";
-import { useTasks, useTasksActions } from "@/context/tasksLists";
+import { useTasksList, useTasksListActions } from "@/context/tasksLists";
 import {
   Form,
   FormControl,
@@ -32,8 +32,8 @@ type Props = {
 };
 
 export default function EditTasksListDialog({ tasksList }: Props) {
-  const { editTasksList, deleteTasksList } = useTasksActions();
-  const { status } = useTasks();
+  const { editTasksList, deleteTasksList } = useTasksListActions();
+  const { status } = useTasksList();
   const form = useForm<z.infer<typeof tasksListForm>>({
     resolver: zodResolver(tasksListForm),
     defaultValues: {

@@ -23,10 +23,10 @@ import tasksListForm from "@/lib/zod/TasksListForm.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useTasksActions } from "@/context/tasksLists";
+import { useTasksListActions } from "@/context/tasksLists";
 
 export default function NewTasksListDialog() {
-  const { createTasksList } = useTasksActions();
+  const { createTasksList } = useTasksListActions();
   const form = useForm<z.infer<typeof tasksListForm>>({
     resolver: zodResolver(tasksListForm),
     defaultValues: {
