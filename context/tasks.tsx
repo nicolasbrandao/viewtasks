@@ -41,7 +41,7 @@ type Actions = {
   deleteTask(id: string): void;
   fetchTasks(tasksListId: string): void;
   createTask(title: string): void;
-  editTask(id: string, title: string): void;
+  editTask(id: string, title?: string, completed?: boolean): void;
 };
 
 const reducer = (
@@ -115,9 +115,7 @@ const reducer = (
     case actionTypes.editTaskSuccess: {
       const updatedTask = action.payload as Task;
       const updatedTasks = state.tasks.map((task) =>
-        task.id !== updatedTask.id
-          ? task
-          : { ...task, title: updatedTask.title },
+        task.id !== updatedTask.id ? task : { ...task, ...updatedTask },
       );
       return {
         ...state,
@@ -171,7 +169,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
         dispatch({ type: actionTypes.fetchTasksStart });
         try {
           const tasksResponse = await fetch(
-            `${apiUrl}/tasks-lists/${tasksListId}`,
+            `${apiUrl}/tasks?tasksListId=${tasksListId}`,
             {
               method: "GET",
             },
@@ -203,7 +201,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
             // TODO: fix this
             body: JSON.stringify({
               title,
-              userId: "cluzkodz20000vg1886jcykru",
+              tasksListId: "clv08tbqe0001rmjlbm7v7h1e",
             }),
           });
 
@@ -223,7 +221,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
         }
       },
 
-      async editTasksList(id: string, title: string) {
+      async editTask(id: string, title?: string, completed?: boolean) {
         dispatch({ type: actionTypes.editTaskStart });
         try {
           const taskResponse = await fetch(`${apiUrl}/tasks/${id}`, {
@@ -231,7 +229,7 @@ export function TasksProvider({ children }: PropsWithChildren) {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ title }),
+            body: JSON.stringify({ title, completed }),
           });
 
           const task = (await taskResponse.json()) as Task;

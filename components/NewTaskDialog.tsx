@@ -1,36 +1,32 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Task } from "@/types/entities";
-import { Pencil } from "lucide-react";
+import { useTasksActions } from "@/context/tasks";
+import taskForm from "@/lib/zod/TaskForm.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { CirclePlus } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
+  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
-  Form,
 } from "./ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import taskForm from "@/lib/zod/TaskForm.schema";
-import { useTasksActions } from "@/context/tasks";
 
-type Props = {
-  task: Task;
-};
-
-export default function EditTaskDialog({ task }: Props) {
-  const { editTask, deleteTask } = useTasksActions();
+export default function NewToDoDialog() {
+  const { createTask } = useTasksActions();
   const form = useForm<z.infer<typeof taskForm>>({
     resolver: zodResolver(taskForm),
     defaultValues: {
@@ -39,25 +35,22 @@ export default function EditTaskDialog({ task }: Props) {
   });
 
   const onSubmit = async (values: z.infer<typeof taskForm>) => {
-    editTask(task.id, values.title);
-  };
-
-  const handleOnDelete = async () => {
-    deleteTask(task.id);
+    createTask(values.title);
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button size={"icon"} variant="outline">
-          <Pencil />
+        <Button className="w-full max-w-[400px] gap-2">
+          <CirclePlus />
+          Add New To-Do
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit task</DialogTitle>
+          <DialogTitle>Add New To-Do</DialogTitle>
           <DialogDescription>
-            Make changes to your tasks here. Click save when you&apos;re done.
+            Create a new To-Do here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -72,20 +65,15 @@ export default function EditTaskDialog({ task }: Props) {
                 <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="To-Do title" {...field} />
+                    <Input placeholder="To-Dos List title" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button type="submit">Save To-Dos List</Button>
+            <Button type="submit">Save To-Do</Button>
           </form>
         </Form>
-        <DialogFooter className="flex-row justify-between gap-2 px-4">
-          <Button onClick={handleOnDelete} variant={"destructive"}>
-            Delete Task
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

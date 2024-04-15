@@ -4,14 +4,16 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Square, SquareCheckBig } from "lucide-react";
 import EditTaskDialog from "./EditTaskDialog";
-import { apiUrl, cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { Task } from "@/types/entities";
+import { useTasksActions } from "@/context/tasks";
 
 type Props = {
   task: Task;
 };
 
 export default function TaskCard({ task }: Props) {
+  const { editTask } = useTasksActions();
   const containerClass = cn(
     "flex w-full items-center justify-between space-x-4 rounded-lg border p-4",
     task.completed ? "border-muted" : "bg-background",
@@ -19,15 +21,9 @@ export default function TaskCard({ task }: Props) {
 
   const titleClass = cn(task.completed && "text-muted-foreground");
 
+  // TODO: verify why this is not updating state/render
   const handleToggleCompleted = async () => {
-    await fetch(`${apiUrl}/tasks/${task.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      // TODO: properly do this with szynced value from the db
-      body: JSON.stringify({ completed: true }),
-    });
+    editTask(task.id, task.title, !task.completed);
   };
 
   return (
