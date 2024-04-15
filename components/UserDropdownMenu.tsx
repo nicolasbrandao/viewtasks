@@ -27,9 +27,15 @@ import {
 import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { decodeUserInfo, signOut } from "@/lib/utils";
+import { CookieValueTypes, getCookie } from "cookies-next";
 
 export default function UserDropdownMenu() {
   const { setTheme } = useTheme();
+  const token: CookieValueTypes = getCookie("access_token");
+
+  let credentials = { sub: "", email: "" };
+  if (token) credentials = decodeUserInfo(token);
 
   return (
     <DropdownMenu>
@@ -39,7 +45,7 @@ export default function UserDropdownMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-2 w-56">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{credentials.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
@@ -49,8 +55,10 @@ export default function UserDropdownMenu() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            {/* TODO: replace this with actual user Id  */}
-            <Link className="flex w-full items-center" href="/userId">
+            <Link
+              className="flex w-full items-center"
+              href={`/${credentials.sub}`}
+            >
               <NotebookTabs className="mr-2 h-4 w-4" />
               <span>My Lists</span>
             </Link>
@@ -80,7 +88,11 @@ export default function UserDropdownMenu() {
           </DropdownMenuPortal>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            signOut();
+          }}
+        >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Logout</span>
         </DropdownMenuItem>
