@@ -79,7 +79,7 @@ export default function EditTasksListDialog({ tasksList }: Props) {
             <Button type="submit">Save To-Dos List</Button>
           </form>
         </Form>
-        <DialogFooter className="flex-row justify-between gap-2">
+        <DialogFooter className="flex-row justify-between gap-2 px-4">
           <Button
             disabled={status === "loading"}
             onClick={() => deleteTasksList(tasksList.id)}
