@@ -1,9 +1,23 @@
+"use client";
+
 import React from "react";
 import Hero from "@/components/Hero";
 import LoginForm from "@/components/LoginForm";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { decodeUserInfo } from "@/lib/utils";
+import { CookieValueTypes, getCookie } from "cookies-next";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  const token: CookieValueTypes = getCookie("access_token");
+
+  if (token) {
+    const { sub } = decodeUserInfo(token);
+    router.push(`/${sub}`);
+  }
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center">
       <Hero />
