@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { TasksList } from "@/types/entities";
-import { useTasks, useTasksActions } from "@/context/tasks";
+import { useTasks, useTasksActions } from "@/context/tasksLists";
 import {
   Form,
   FormControl,

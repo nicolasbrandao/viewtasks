@@ -2,7 +2,7 @@
 
 import NewTasksListDialog from "@/components/NewTasksListDialog";
 import TasksListCard from "@/components/TasksListCard";
-import { useTasks, useTasksActions } from "@/context/tasks";
+import { useTasks, useTasksActions } from "@/context/tasksLists";
 import React, { useEffect } from "react";
 
 export default function UserPage({ params }: { params: { userId: string } }) {
