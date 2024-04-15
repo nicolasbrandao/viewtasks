@@ -34,7 +34,7 @@ export default function EditTaskDialog({ task }: Props) {
   const form = useForm<z.infer<typeof taskForm>>({
     resolver: zodResolver(taskForm),
     defaultValues: {
-      title: "",
+      title: task.title,
     },
   });
 
