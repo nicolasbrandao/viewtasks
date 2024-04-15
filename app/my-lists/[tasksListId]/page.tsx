@@ -44,14 +44,17 @@ export default function TasksListPage({
       </h1>
       <NewToDoDialog tasksListId={tasksList?.id as string} />
       <h2 className="place-self-start text-[2rem] font-bold">To-Dos</h2>
-      {tasks &&
+      {tasks.length === 0 && (
+        <p className="text-muted-foreground">No To-Dos yet</p>
+      )}
+      {tasks.length > 0 &&
         tasks
           .filter((task) => !task.completed)
           .map((task) => <TaskCard key={task.id} task={task} />)}
       {tasks.filter((task) => task.completed).length > 0 && (
         <h2 className="place-self-start text-[2rem]">Done!</h2>
       )}
-      {tasks &&
+      {tasks.length > 0 &&
         tasks
           .filter((task) => task.completed)
           .map((task) => <TaskCard key={task.id} task={task} />)}

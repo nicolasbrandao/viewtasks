@@ -24,10 +24,13 @@ export default function UserPage() {
       <h1 className="text-[2rem] font-bold">My To-Dos Lists</h1>
       <NewTasksListDialog />
       <div className="flex w-full flex-col items-center gap-4">
-        {tasksLists &&
+        {tasksLists.length > 0 ? (
           tasksLists.map((tasksList) => (
             <TasksListCard key={tasksList.id} tasksList={tasksList} />
-          ))}
+          ))
+        ) : (
+          <p className="text-muted-foreground">No To-Dos list yet</p>
+        )}
       </div>
     </main>
   );
