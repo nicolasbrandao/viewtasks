@@ -3,26 +3,39 @@
 import NewToDoDialog from "@/components/NewTaskDialog";
 import TaskCard from "@/components/TaskCard";
 import { useTasks, useTasksActions } from "@/context/tasks";
+import { useTasksList, useTasksListActions } from "@/context/tasksLists";
 import React, { useEffect } from "react";
 
 export default function TasksListPage({
   params,
 }: {
-  params: { tasksListId: string };
+  params: { userId: string; tasksListId: string };
 }) {
+  const { tasksLists } = useTasksList();
   const { tasks } = useTasks();
   const { fetchTasks } = useTasksActions();
+  const { fetchTasksLists } = useTasksListActions();
 
   useEffect(() => {
     fetchTasks(params.tasksListId);
-  }, [fetchTasks, params.tasksListId]);
+    fetchTasksLists(params.userId);
+  }, [
+    fetchTasks,
+    fetchTasksLists,
+    params.tasksListId,
+    params.userId
+  ]);
+
+  const tasksList = tasksLists.find(
+    (tasksList) => tasksList.id === params.tasksListId,
+  );
+
+  console.log(tasksList);
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
       <h1 className="place-self-start text-[3rem] font-bold">
-        {/* TODO: use actual tasksList title */}
-        {/* {tasksList.title} */}
-        TITLE
+        {tasksList?.title}
       </h1>
       <NewToDoDialog />
       <h2 className="place-self-start text-[2rem] font-bold">To-Dos</h2>
