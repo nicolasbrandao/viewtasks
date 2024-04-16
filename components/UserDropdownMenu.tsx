@@ -47,7 +47,7 @@ export default function UserDropdownMenu() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="mr-2 w-56">
-        <DropdownMenuLabel>{credentials.email}</DropdownMenuLabel>
+        <DropdownMenuLabel className="w-full truncate">{credentials.email}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
