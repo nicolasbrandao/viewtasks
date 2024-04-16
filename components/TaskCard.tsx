@@ -24,7 +24,6 @@ export default function TaskCard({ task }: Props) {
     "truncate max-w-[200px]",
   );
 
-  // TODO: verify why this is not updating state/render
   const handleToggleCompleted = async () => {
     editTask(task.id, task.title, !task.completed);
   };
