@@ -15,13 +15,13 @@ type Props = {
 export default function TaskCard({ task }: Props) {
   const { editTask } = useTasksActions();
   const containerClass = cn(
-    "flex w-full items-center justify-between space-x-4 rounded-lg border p-4",
+    "flex w-full items-center justify-between rounded-lg border gap-2 p-4",
     task.completed ? "border-muted" : "bg-background",
   );
 
   const titleClass = cn(
     task.completed && "text-muted-foreground",
-    "truncate w-full",
+    "truncate w-full max-w-[200px] lg:max-w-[800px]",
   );
 
   const handleToggleCompleted = async () => {
