@@ -201,7 +201,6 @@ export function TasksListProvider({ children }: PropsWithChildren) {
             headers: {
               "Content-Type": "application/json",
             },
-            // TODO: fix this
             body: JSON.stringify({
               title,
               userId,
