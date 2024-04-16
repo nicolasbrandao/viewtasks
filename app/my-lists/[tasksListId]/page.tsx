@@ -39,7 +39,7 @@ export default function TasksListPage({
 
   return (
     <main className="flex min-h-screen flex-col items-center gap-4 px-4 pt-[100px]">
-      <h1 className="place-self-start text-[3rem] font-bold">
+      <h1 className="w-full place-self-start truncate text-[3rem] font-bold">
         {tasksList?.title}
       </h1>
       <NewToDoDialog tasksListId={tasksList?.id as string} />

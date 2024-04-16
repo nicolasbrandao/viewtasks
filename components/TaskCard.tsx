@@ -21,7 +21,7 @@ export default function TaskCard({ task }: Props) {
 
   const titleClass = cn(
     task.completed && "text-muted-foreground",
-    "truncate max-w-[200px]",
+    "truncate w-full",
   );
 
   const handleToggleCompleted = async () => {

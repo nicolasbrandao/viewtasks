@@ -14,7 +14,7 @@ export default function TasksListCard({ tasksList }: Props) {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>{tasksList.title}</CardTitle>
+        <CardTitle className="truncate w-full">{tasksList.title}</CardTitle>
       </CardHeader>
       <CardFooter className="flex justify-between">
         <EditTasksListDialog tasksList={tasksList} />
