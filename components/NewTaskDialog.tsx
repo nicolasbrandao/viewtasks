@@ -56,6 +56,9 @@ export default function NewToDoDialog({ tasksListId }: Props) {
           <DialogDescription>
             Create a new To-Do here. Click save when you&apos;re done.
           </DialogDescription>
+          {form.formState.errors.root && (
+            <p className="text-sm text-destructive">Error submitting task</p>
+          )}
         </DialogHeader>
         <Form {...form}>
           <form
@@ -75,7 +78,9 @@ export default function NewToDoDialog({ tasksListId }: Props) {
                 </FormItem>
               )}
             />
-            <Button type="submit">Save To-Do</Button>
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              Save To-Do
+            </Button>
           </form>
         </Form>
       </DialogContent>

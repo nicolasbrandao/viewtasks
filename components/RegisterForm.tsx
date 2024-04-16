@@ -16,8 +16,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { API_URL } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof registerForm>>({
     resolver: zodResolver(registerForm.strict()),
     defaultValues: {
@@ -35,6 +37,7 @@ export default function RegisterForm() {
         },
         body: JSON.stringify(values),
       });
+      router.push("/login");
     } catch (e) {
       // TODO: properly handle errors
       console.log(e);
@@ -43,6 +46,9 @@ export default function RegisterForm() {
 
   return (
     <Form {...form}>
+      {form.formState.errors.root && (
+        <p className="destructive">Error trying to register</p>
+      )}
       <form
         className="flex w-full max-w-[400px] flex-col space-y-8 p-4"
         onSubmit={form.handleSubmit(onSubmit)}
@@ -77,7 +83,11 @@ export default function RegisterForm() {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">
+        <Button
+          className="w-full"
+          disabled={form.formState.isSubmitting}
+          type="submit"
+        >
           Register
         </Button>
       </form>

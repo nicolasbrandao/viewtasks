@@ -6,6 +6,7 @@ import { useTasks, useTasksActions } from "@/context/tasks";
 import { useTasksList, useTasksListActions } from "@/context/tasksLists";
 import { decodeUserInfo } from "@/lib/utils";
 import { getCookie, CookieValueTypes } from "cookies-next";
+import { LoaderCircle } from "lucide-react";
 import React, { useEffect } from "react";
 
 export default function TasksListPage({
@@ -14,7 +15,7 @@ export default function TasksListPage({
   params: { tasksListId: string };
 }) {
   const { tasksLists } = useTasksList();
-  const { tasks } = useTasks();
+  const { tasks, status, error } = useTasks();
   const { fetchTasks } = useTasksActions();
   const { fetchTasksLists } = useTasksListActions();
 
@@ -44,8 +45,13 @@ export default function TasksListPage({
       </h1>
       <NewToDoDialog tasksListId={tasksList?.id as string} />
       <h2 className="place-self-start text-[2rem] font-bold">To-Dos</h2>
-      {tasks.length === 0 && (
-        <p className="text-muted-foreground">No To-Dos yet</p>
+      {error && <p className="text-destructive">{error}</p>}
+      {status === "loading" ? (
+        <LoaderCircle className="animate-spin" />
+      ) : (
+        tasks.length === 0 && (
+          <p className="text-muted-foreground">No To-Dos yet</p>
+        )
       )}
       {tasks.length > 0 &&
         tasks

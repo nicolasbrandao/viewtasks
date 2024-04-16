@@ -50,6 +50,9 @@ export default function LoginForm() {
   };
   return (
     <Form {...form}>
+      {form.formState.errors.root && (
+        <p className="destructive">Error trying to login</p>
+      )}
       <form
         className="flex w-full max-w-[400px] flex-col space-y-8 p-4"
         onSubmit={form.handleSubmit(onSubmit)}
@@ -84,7 +87,11 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button className="w-full" type="submit">
+        <Button
+          className="w-full"
+          disabled={form.formState.isSubmitting}
+          type="submit"
+        >
           Login
         </Button>
       </form>

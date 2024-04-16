@@ -59,6 +59,9 @@ export default function EditTaskDialog({ task }: Props) {
           <DialogDescription>
             Make changes to your tasks here. Click save when you&apos;re done.
           </DialogDescription>
+          {form.formState.errors.root && (
+            <p className="text-sm text-destructive">Error submitting changes</p>
+          )}
         </DialogHeader>
         <Form {...form}>
           <form
@@ -78,11 +81,17 @@ export default function EditTaskDialog({ task }: Props) {
                 </FormItem>
               )}
             />
-            <Button type="submit">Save To-Dos List</Button>
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              Save To-Dos List
+            </Button>
           </form>
         </Form>
         <DialogFooter className="flex-row justify-between gap-2 px-4">
-          <Button onClick={handleOnDelete} variant={"destructive"}>
+          <Button
+            disabled={form.formState.isSubmitting}
+            onClick={handleOnDelete}
+            variant={"destructive"}
+          >
             Delete Task
           </Button>
         </DialogFooter>

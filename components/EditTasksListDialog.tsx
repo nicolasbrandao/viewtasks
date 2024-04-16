@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { TasksList } from "@/types/entities";
-import { useTasksList, useTasksListActions } from "@/context/tasksLists";
+import { useTasksListActions } from "@/context/tasksLists";
 import {
   Form,
   FormControl,
@@ -33,7 +33,6 @@ type Props = {
 
 export default function EditTasksListDialog({ tasksList }: Props) {
   const { editTasksList, deleteTasksList } = useTasksListActions();
-  const { status } = useTasksList();
   const form = useForm<z.infer<typeof tasksListForm>>({
     resolver: zodResolver(tasksListForm),
     defaultValues: {
@@ -57,6 +56,9 @@ export default function EditTasksListDialog({ tasksList }: Props) {
             Make changes to your tasks list here. Click save when you&apos;re
             done.
           </DialogDescription>
+          {form.formState.errors.root && (
+            <p className="text-sm text-destructive">Error submitting changes</p>
+          )}
         </DialogHeader>
         <Form {...form}>
           <form
@@ -76,12 +78,14 @@ export default function EditTasksListDialog({ tasksList }: Props) {
                 </FormItem>
               )}
             />
-            <Button type="submit">Save To-Dos List</Button>
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              Save To-Dos List
+            </Button>
           </form>
         </Form>
         <DialogFooter className="flex-row justify-between gap-2 px-4">
           <Button
-            disabled={status === "loading"}
+            disabled={form.formState.isSubmitting}
             onClick={() => deleteTasksList(tasksList.id)}
             type="button"
             variant={"destructive"}

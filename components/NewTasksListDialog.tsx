@@ -59,6 +59,11 @@ export default function NewTasksListDialog() {
           <DialogDescription>
             Create a new To-Dos List here. Click save when you&apos;re done.
           </DialogDescription>
+          {form.formState.errors.root && (
+            <p className="text-sm text-destructive">
+              Error submitting tasks list
+            </p>
+          )}
         </DialogHeader>
         <Form {...form}>
           <form
@@ -78,7 +83,9 @@ export default function NewTasksListDialog() {
                 </FormItem>
               )}
             />
-            <Button type="submit">Save To-Dos List</Button>
+            <Button disabled={form.formState.isSubmitting} type="submit">
+              Save To-Dos List
+            </Button>
           </form>
         </Form>
       </DialogContent>

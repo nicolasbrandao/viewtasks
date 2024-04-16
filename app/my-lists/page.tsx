@@ -5,10 +5,11 @@ import TasksListCard from "@/components/TasksListCard";
 import { useTasksList, useTasksListActions } from "@/context/tasksLists";
 import { decodeUserInfo } from "@/lib/utils";
 import { getCookie, CookieValueTypes } from "cookies-next";
+import { LoaderCircle } from "lucide-react";
 import React, { useEffect } from "react";
 
 export default function UserPage() {
-  const { tasksLists } = useTasksList();
+  const { tasksLists, status, error } = useTasksList();
   const { fetchTasksLists } = useTasksListActions();
   const token: CookieValueTypes = getCookie("access_token");
 
@@ -24,6 +25,8 @@ export default function UserPage() {
       <h1 className="text-[2rem] font-bold">My To-Dos Lists</h1>
       <NewTasksListDialog />
       <div className="flex w-full flex-col items-center gap-4">
+        {status === "loading" && <LoaderCircle className="animate-spin" />}
+        {error && <p className="text-destructive">{error}</p>}
         {tasksLists.length > 0 ? (
           tasksLists.map((tasksList) => (
             <TasksListCard key={tasksList.id} tasksList={tasksList} />
