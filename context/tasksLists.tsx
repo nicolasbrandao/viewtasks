@@ -40,7 +40,7 @@ const initialState: StateType = {
 type Actions = {
   deleteTasksList(id: string): void;
   fetchTasksLists(userId: string): void;
-  createTasksList(title: string): void;
+  createTasksList(userId: string, title: string): void;
   editTasksList(id: string, title: string): void;
 };
 
@@ -193,7 +193,7 @@ export function TasksListProvider({ children }: PropsWithChildren) {
         }
       },
 
-      async createTasksList(title: string) {
+      async createTasksList(userId: string, title: string) {
         dispatch({ type: actionTypes.createTasksListStart });
         try {
           const res = await fetch(`${API_URL}/tasks-lists`, {
@@ -204,7 +204,7 @@ export function TasksListProvider({ children }: PropsWithChildren) {
             // TODO: fix this
             body: JSON.stringify({
               title,
-              userId: "cluzkodz20000vg1886jcykru",
+              userId,
             }),
           });
 

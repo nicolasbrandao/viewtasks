@@ -24,8 +24,15 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useTasksListActions } from "@/context/tasksLists";
+import { decodeUserInfo } from "@/lib/utils";
+import { CookieValueTypes, getCookie } from "cookies-next";
 
 export default function NewTasksListDialog() {
+  const token: CookieValueTypes = getCookie("access_token");
+
+  let credentials = { sub: "", email: "" };
+  if (token) credentials = decodeUserInfo(token);
+
   const { createTasksList } = useTasksListActions();
   const form = useForm<z.infer<typeof tasksListForm>>({
     resolver: zodResolver(tasksListForm),
@@ -35,7 +42,7 @@ export default function NewTasksListDialog() {
   });
 
   const onSubmit = async (values: z.infer<typeof tasksListForm>) => {
-    createTasksList(values.title);
+    createTasksList(credentials.sub, values.title);
   };
 
   return (
