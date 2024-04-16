@@ -5,6 +5,7 @@ const registerForm = z.object({
   password: z
     .string()
     .min(8, "The password field must have at least 8 characters")
+    .max(64, "You reached the maximum number of characters")
     .regex(
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/,
       "Password must contain at least 1 number, 1 letter, 1 capital letter, and 1 special character",
